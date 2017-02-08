@@ -16,10 +16,15 @@ def rgb_to_energy(rgb):
 
 
 def energy_to_rgb(energy):
-    print(energy)
     hex_string = hex(energy)[2:]
+    buffer = ""
 
-    return ImageColor.getrgb("#" + hex(energy)[2:])
+    while len(buffer + hex_string) < 6:
+        buffer += "0"
+
+    hex_string = buffer + hex_string
+
+    return ImageColor.getrgb("#" + hex_string)
 
 
 def matrix_to_image(image_matrix):
@@ -27,13 +32,12 @@ def matrix_to_image(image_matrix):
     image = Image.new("RGB", (width, height), (255, 255, 255))
     pix = image.load()
 
-    # Indicies switched from np.array to image pixel
     y = 0
     while y < height:
 
         x = 0
         while x < width:
-            pix[y,x] = energy_to_rgb(image_matrix[x][y])
+            pix[x,y] = energy_to_rgb(image_matrix[x][y])
             x += 1
         y += 1
 
@@ -79,6 +83,7 @@ if __name__ == "__main__":
     print(rgb_to_energy((255,9,9)))
     print(color_array(im))
     print(ImageColor.getrgb("#" + hex(16777215)[2:]))
+    print(energy_to_rgb(325))
     a = color_array(im)
     b = matrix_to_image(a)
     b.save("TestResults/im_test.png")
