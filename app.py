@@ -61,30 +61,43 @@ def color_array(image):
 
     return image_matrix
 
+color_mod = 16777215
 
-def encrypt(image, color_mod = 16777215):
+def encrypt(image):
     im_matrix = color_array(image)
     n = image.size[1]
-    cipher_matrix = mim.random_mod_matrix(0, color_mod, (n,n))
-    key_matrix = mim.inverse_matrix(cipher_matrix, color_mod)
+    key_matrix = mim.random_mod_matrix(0, color_mod, (n,n))
+    cipher_matrix = mim.inverse_matrix(key_matrix, color_mod)
+    print("ciph")
     scrambled_image_matrix = np.mod(np.dot(cipher_matrix, im_matrix), color_mod)
+    return matrix_to_image(scrambled_image_matrix), matrix_to_image(key_matrix)
 
 
+def decrypt(scrambled_image, key_image):
+    scrambled_image_matrix = color_array(scrambled_image)
+    key_matrix = color_array(key_image)
+    unscrambled_matrix = np.mod(np.dot(key_matrix, scrambled_image_matrix), color_mod)
+    return matrix_to_image(unscrambled_matrix)
 
 
 if __name__ == "__main__":
     im = Image.open("Images/2xtest.png")
-    pix = im.load()
-    print(pix[0,0])
-    print(pix[0,1])
-    print(rgb_to_energy(pix[0,1]))
-    print(rgb_to_energy(pix[1,0]))
-    print(rgb_to_energy(pix[1,1]))
-    print(rgb_to_energy((255,9,9)))
-    print(color_array(im))
-    print(ImageColor.getrgb("#" + hex(16777215)[2:]))
-    print(energy_to_rgb(325))
-    a = color_array(im)
-    b = matrix_to_image(a)
-    b.save("TestResults/im_test.png")
+    # pix = im.load()
+    # print(pix[0,0])
+    # print(pix[0,1])
+    # print(rgb_to_energy(pix[0,1]))
+    # print(rgb_to_energy(pix[1,0]))
+    # print(rgb_to_energy(pix[1,1]))
+    # print(rgb_to_energy((255,9,9)))
+    # print(color_array(im))
+    # print(ImageColor.getrgb("#" + hex(16777215)[2:]))
+    # print(energy_to_rgb(325))
+    # a = color_array(im)
+    # b = matrix_to_image(a)
+    # b.save("TestResults/im_test.png")
+    (scr, key) = encrypt(im)
+    # scr.save("TestResults/scr.png")
+    # key.save("TestResults/key.png")
+    # outAnswer = decrypt(scr, key)
+    # outAnswer.save("TestResults/answer.png")
 
