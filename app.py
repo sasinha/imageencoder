@@ -61,7 +61,7 @@ def color_array(image):
 
     return image_matrix
 
-color_mod = 16777215
+color_mod = 16777217
 
 def encrypt(image):
     im_matrix = color_array(image)
@@ -96,8 +96,8 @@ if __name__ == "__main__":
     # b = matrix_to_image(a)
     # b.save("TestResults/im_test.png")
     (scr, key) = encrypt(im)
-    # scr.save("TestResults/scr.png")
-    # key.save("TestResults/key.png")
-    # outAnswer = decrypt(scr, key)
-    # outAnswer.save("TestResults/answer.png")
+    scr.save("TestResults/scr.png")
+    key.save("TestResults/key.png")
+    outAnswer = decrypt(scr, key)
+    outAnswer.save("TestResults/answer.png")
 

@@ -2,7 +2,7 @@ import numpy as np
 
 
 #  copy-pasted from old cipher and needs cleanup
-def inverse_matrix(inputMatrix,modulo):
+def inverse_matrix(inputMatrix, modulo):
     a = inputMatrix
     m = modulo
     p = np.round(np.linalg.det(a) * np.linalg.inv(a))
@@ -12,7 +12,7 @@ def inverse_matrix(inputMatrix,modulo):
     b = np.where(res == 1)
     err = np.size(b)
     if err == 0:
-        # print("The matrix has no modular inverse")
+        print("The matrix has no modular inverse")
         return 0
     b = b[0].item(0) + 1
     return np.mod(b * p, m).astype(int)
