@@ -5,26 +5,33 @@ from modules import modulo_inverse_matrix as mim
 
 def rgb_to_energy(rgb):
     hex_val = ""
-    for color in rgb:
-        hex_to_add = hex(color)[2:]
+    if type(rgb) == int:
+        hex_to_add = hex(rgb)[2:]
         if len(hex_to_add) < 2:
             hex_val += "0" + hex_to_add
         else:
             hex_val += hex_to_add
+    else:
+        for color in rgb:
+            hex_to_add = hex(color)[2:]
+            if len(hex_to_add) < 2:
+                hex_val += "0" + hex_to_add
+            else:
+                hex_val += hex_to_add
 
     return int(hex_val, 16)
 
 
+
 def energy_to_rgb(energy):
-    hex_string = hex(energy)[2:]
-    buffer = ""
+    hex_string_total = "#"
 
-    while len(buffer + hex_string) < 6:
-        buffer += "0"
+    for color in energy:
+        hex_string = hex(color)[2:]
+        hex_string = ("0" * (2 * len(hex_string))) + hex_string
+        hex_string_total += hex_string
 
-    hex_string = buffer + hex_string
-
-    return ImageColor.getrgb("#" + hex_string)
+    return ImageColor.getrgb(hex_string_total)
 
 
 def matrix_to_image(image_matrix):
@@ -47,21 +54,26 @@ def matrix_to_image(image_matrix):
 def color_array(image):
     width, height = image.size
     pix = image.load()
-    image_matrix = np.empty([height, width], dtype=int)
+    im_r = np.empty([height, width], dtype=int)
+    im_g = np.empty([height, width], dtype=int)
+    im_b = np.empty([height, width], dtype=int)
 
     y = 0
     while y < height:
 
         x = 0
         while x < width:
-            energy_val = rgb_to_energy(pix[x, y])
-            image_matrix[x,y] = energy_val
+            im_r[x,y] = rgb_to_energy((pix[x, y])[0])
+            im_g[x,y] = rgb_to_energy((pix[x, y])[1])
+            im_b[x,y] = rgb_to_energy((pix[x, y])[2])
             x += 1
         y += 1
 
-    return image_matrix
+    return (im_r, im_g, im_b)
 
-color_mod = 16777217
+
+color_mod = 255
+
 
 def encrypt(image):
     im_matrix = color_array(image)
@@ -80,24 +92,25 @@ def decrypt(scrambled_image, key_image):
     return matrix_to_image(unscrambled_matrix)
 
 
+# Testing
 if __name__ == "__main__":
     im = Image.open("Images/2xtest.png")
-    # pix = im.load()
+    pix = im.load()
     # print(pix[0,0])
     # print(pix[0,1])
     # print(rgb_to_energy(pix[0,1]))
     # print(rgb_to_energy(pix[1,0]))
     # print(rgb_to_energy(pix[1,1]))
-    # print(rgb_to_energy((255,9,9)))
-    # print(color_array(im))
+    # print(rgb_to_energy((255)))
+    print(color_array(im))
     # print(ImageColor.getrgb("#" + hex(16777215)[2:]))
     # print(energy_to_rgb(325))
     # a = color_array(im)
     # b = matrix_to_image(a)
     # b.save("TestResults/im_test.png")
-    (scr, key) = encrypt(im)
-    scr.save("TestResults/scr.png")
-    key.save("TestResults/key.png")
-    outAnswer = decrypt(scr, key)
-    outAnswer.save("TestResults/answer.png")
+    # (scr, key) = encrypt(im)
+    # scr.save("TestResults/scr.png")
+    # key.save("TestResults/key.png")
+    # outAnswer = decrypt(scr, key)
+    # outAnswer.save("TestResults/answer.png")
 
