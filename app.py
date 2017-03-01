@@ -96,13 +96,16 @@ def decrypt(scrambled_image, key_image):
 if __name__ == "__main__":
     im = Image.open("Images/2xtest.png")
     pix = im.load()
+    im_r = np.empty([3, 3], dtype=int)
+    im_r[2,2] = pix[0,0][0]
+    print(im_r)
     # print(pix[0,0])
-    # print(pix[0,1])
+    # print(pix[0,1][0])
     # print(rgb_to_energy(pix[0,1]))
     # print(rgb_to_energy(pix[1,0]))
     # print(rgb_to_energy(pix[1,1]))
     # print(rgb_to_energy((255)))
-    print(color_array(im))
+    # print(color_array(im))
     # print(ImageColor.getrgb("#" + hex(16777215)[2:]))
     # print(energy_to_rgb(325))
     # a = color_array(im)
