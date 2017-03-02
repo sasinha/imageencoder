@@ -38,7 +38,7 @@ def decrypt(scr_im, key_image):
 
 # Testing
 if __name__ == "__main__":
-    im = Image.open("Images/2xtest.png")
+    im = Image.open("Images/2xtest.jpg")
     # pix = im.load()
     # print(pix[0,0])
     # print(pix[0,1])
