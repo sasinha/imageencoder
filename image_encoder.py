@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageColor
 from modules import image_matrix_relation as imr
 from modules import rgb_matrix_math as rgb_mm
 
@@ -38,7 +38,10 @@ def decrypt(scr_im, key_image):
 
 # Testing
 if __name__ == "__main__":
-    im = Image.open("Images/2xtest.jpg")
+    im = Image.open("a.jpg")
+    # a = Image.open("yes.jpg")
+    # pix = a.load()
+    # print(pix[5,100])
     # pix = im.load()
     # print(pix[0,0])
     # print(pix[0,1])

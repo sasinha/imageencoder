@@ -1,6 +1,7 @@
 import image_encoder as ie
 from PIL import Image
 
+# Only works with jpgs with no alpha channel - only has rgb values
 
 user_image_name_full = input("Please enter your image name: ")
 user_image_name = user_image_name_full.split(".")[0]
