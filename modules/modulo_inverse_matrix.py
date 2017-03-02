@@ -33,24 +33,18 @@ def random_mod_matrix(min, max, dimension):
 
 
 
+if __name__ == "__main__":
+    mTest=np.array(([6,24,1],[13,16,10],[20,17,15]))
+    mResult = np.array(([8,5,10],[21,8,21],[21,12,8]))
+    mInverse=inverse_matrix(mTest,26)
+    print("Inverse: \n", mInverse)
+    print("check: \n", mResult)
 
 
+    test = random_mod_matrix(0,28,(3,3))
+    testb = inverse_matrix(test, 28)
+    testCheck = inverse_matrix(testb, 28)
 
-
-
-# Uncomment below for test
-
-
-#
-# mTest=np.array(([6,24,1],[13,16,10],[20,17,15]))
-# mResult = np.array(([8,5,10],[21,8,21],[21,12,8]))
-# mInverse=inverse_matrix(mTest,26)
-# print("Inverse: ", mInverse)
-# print("result: ", mResult)
-#
-
-# test = random_mod_matrix(0,28,(3,3))
-# testb = inverse_matrix(test, 28)
-#
-# print(test)
-# print(testb)
+    print(test)
+    print(testb)
+    print(testCheck)

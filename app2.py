@@ -23,7 +23,7 @@ def matricies_to_image(rgb):
     return image
 
 def inv_color_matrix(rgb):
-    return (mim.inverse_matrix(rgb[0], color_mod), mim.inverse_matrix(rgb[1], color_mod), mim.inverse_matrix(rgb[2], color_mod))
+    return mim.inverse_matrix(rgb[0], color_mod), mim.inverse_matrix(rgb[1], color_mod), mim.inverse_matrix(rgb[2], color_mod)
 
 def random_color_matrix(n):
     return mim.random_mod_matrix(0, color_mod, (n,n)), mim.random_mod_matrix(0, color_mod, (n,n)), mim.random_mod_matrix(0, color_mod, (n,n))
@@ -36,28 +36,20 @@ def encrypt(image):
     # Generate ciphers and keys for each color
     cipher_matricies = random_color_matrix(n)
     key_matricies = inv_color_matrix(cipher_matricies)
+    test = inv_color_matrix(key_matricies)
+    test_im = matricies_to_image(test)
+    print(cipher_matricies[2])
+    print(test[2])
 
     cipher_image = matricies_to_image(cipher_matricies)
     key_image = matricies_to_image(key_matricies)
-    return cipher_image, key_image
+    return cipher_image, key_image, test_im
 
 # Testing
 if __name__ == "__main__":
     im = Image.open("Images/2xtest.png")
-    # pix = im.load()
-    # print(pix[0,0])
-    # print(pix[0,1])
-    # print(rgb_to_energy(pix[0,1]))
-    # print(rgb_to_energy(pix[1,0]))
-    # print(rgb_to_energy(pix[1,1]))
-    # print(rgb_to_energy((255)))
-    # print(color_array(im))
-    # print(ImageColor.getrgb("#" + hex(16777215)[2:]))
-    # print(energy_to_rgb(325))
-    # a = color_array(im)
-    # b = matrix_to_image(a)
-    # b.save("TestResults/im_test.png")
-    (scr, key) = encrypt(im)
+    (scr, key, check) = encrypt(im)
+    check.save("TestResults/check.png")
     scr.save("TestResults/scr.png")
     key.save("TestResults/key.png")
     # outAnswer = decrypt(scr, key)
