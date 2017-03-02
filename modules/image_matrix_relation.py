@@ -3,8 +3,12 @@ import numpy as np
 
 
 def image_to_matricies(image):
+    # image to matrix
+
     width, height = image.size
     pix = image.load()
+
+    # initialize matricies for red, green, and blue hex values (as ints)
     im_r = np.empty([height, width], dtype=int)
     im_g = np.empty([height, width], dtype=int)
     im_b = np.empty([height, width], dtype=int)
@@ -23,8 +27,9 @@ def image_to_matricies(image):
     return (im_r, im_g, im_b)
 
 
-
 def matricies_to_image(rgb):
+    # matricies to image
+
     (width, height) = rgb[0].shape
     image = Image.new("RGB", (width, height), (255, 255, 255))
     pix = image.load()
@@ -34,6 +39,7 @@ def matricies_to_image(rgb):
 
         x = 0
         while x < width:
+            # set pixel with associated red, green, and blue value
             pix[x,y] = (rgb[0])[x][y], (rgb[1])[x][y], (rgb[2])[x][y]
             x += 1
         y += 1
