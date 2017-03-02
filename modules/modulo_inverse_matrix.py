@@ -12,7 +12,6 @@ def inverse_matrix(inputMatrix, modulo):
     b = np.where(res == 1)
     err = np.size(b)
     if err == 0:
-        print("The matrix has no modular inverse")
         return 0
     b = b[0].item(0) + 1
     return np.mod(b * p, m).astype(int)
